@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="padding_xxsmall">2dp</dimen>
+    <dimen name="padding_xsmall">4dp</dimen>
+    <dimen name="padding_small">8dp</dimen>
+    <dimen name="padding_medium">16dp</dimen>
+    <dimen name="padding_large">20dp</dimen>
+    <dimen name="padding_xlarge">26dp</dimen>
+    <dimen name="avatar_size_medium">72dp</dimen>
+    <dimen name="avatar_size_large">96dp</dimen>
+    <dimen name="user_list_item_start_indent">88dp</dimen>
+</resources>

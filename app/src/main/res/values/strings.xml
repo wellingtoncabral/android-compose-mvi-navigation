@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Github Compose</string>
+    <string name="users_list_header">Users from public Github Api</string>
+    <string name="users_screen_top_bar_title">Github Users</string>
+    <string name="users_screen_snackbar_loaded_message">Users are loaded.</string>
+    <string name="repos_screen_top_bar_title">Repositories</string>
+    <string name="repos_screen_snackbar_loaded_message">Repositories are loaded.</string>
+    <string name="repos_score_title">Repos</string>
+    <string name="followers_score_title">Followers</string>
+    <string name="following_score_title">Following</string>
+    <string name="language_not_defined">Language not defined</string>
+    <string name="no_description_informed">No description</string>
+    <string name="location_not_defined">Location not defined</string>
+    <string name="button_see_all_title">SEE ALL</string>
+    <string name="button_view_blog_title">VIEW BLOG</string>
+    <string name="blog_not_found_dialog_title">Blog not found</string>
+    <string name="blog_not_found_dialog_text">The use doesn\'t have a blog</string>
+    <string name="blog_not_found_dialog_confirm_button">Got it</string>
+</resources>
