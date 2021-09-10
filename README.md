@@ -32,10 +32,10 @@ The sample app presents a modern Android application Architecture that is scalab
     * [Android KTX](https://developer.android.com/kotlin/ktx) - Jetpack Kotlin extensions
     
 ## Light mode
-<img src="misc/demo_light_mode.gif" width="380" height="620" align="center">
+<img src="misc/demo_light_mode.gif">
 
 ## Dark mode
-<img src="misc/demo_dark_mode.gif" width="380" height="620" align="center">
+<img src="misc/demo_dark_mode.gif">
 
 ## Architecture
 The project is layered traditionally with a View, Presentation, Model separation and presents a MVI inspired from [Yusuf Ceylan's architecture](https://proandroiddev.com/mvi-architecture-with-kotlin-flows-and-channels-d36820b2028d) but adapted to Compose.
@@ -48,7 +48,7 @@ Architecture layers:
 ![](https://i.imgur.com/UXwFbmv.png)
 
 There are a three core components described:
-* **State** - data class that holds the state content of the corresponding screen e.g. list of `FoodItem`, loading status etc. The state is exposed as a Compose runtime `MutableState` object from that perfectly matches the use-case of receiving continuous updates with initial value.
+* **State** - data class that holds the state content of the corresponding screen e.g. list of `User`, loading status etc. The state is exposed as a Compose runtime `MutableState` object from that perfectly matches the use-case of receiving continuous updates with initial value.
 
 * **Event** - plain object that is sent through callbacks from the UI to the presentation layer. Events should reflect UI events caused by the user. Event updates are exposed as a `MutableSharedFlow` type which is similar to `StateFlow` and that behaves as in the absence of a subscriber, any posted event will be immediately dropped.
 
