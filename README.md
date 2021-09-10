@@ -31,11 +31,8 @@ The sample app presents a modern Android application Architecture that is scalab
     * [Android Architecture components](https://developer.android.com/topic/libraries/architecture) ([ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel), [Navigation](https://developer.android.com/jetpack/androidx/releases/navigation))
     * [Android KTX](https://developer.android.com/kotlin/ktx) - Jetpack Kotlin extensions
     
-## Light mode
-<img src="misc/demo_light_mode.gif">
-
-## Dark mode
-<img src="misc/demo_dark_mode.gif">
+## Light and Dark mode
+<img src="misc/demo_light_mode.gif" width="360" height="820"> <img src="misc/demo_dark_mode.gif" width="360" height="820">
 
 ## Architecture
 The project is layered traditionally with a View, Presentation, Model separation and presents a MVI inspired from [Yusuf Ceylan's architecture](https://proandroiddev.com/mvi-architecture-with-kotlin-flows-and-channels-d36820b2028d) but adapted to Compose.
