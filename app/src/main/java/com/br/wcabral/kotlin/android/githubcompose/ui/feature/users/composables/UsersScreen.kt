@@ -1,14 +1,17 @@
 package com.br.wcabral.kotlin.android.githubcompose.ui.feature.users.composables
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.*
+import androidx.compose.material.Scaffold
+import androidx.compose.material.ScaffoldState
+import androidx.compose.material.SnackbarDuration
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import com.br.wcabral.kotlin.android.githubcompose.R
+import com.br.wcabral.kotlin.android.githubcompose.data.model.buildUserPreview
 import com.br.wcabral.kotlin.android.githubcompose.ui.base.SIDE_EFFECTS_KEY
+import com.br.wcabral.kotlin.android.githubcompose.ui.feature.common.NetworkError
 import com.br.wcabral.kotlin.android.githubcompose.ui.feature.common.Progress
 import com.br.wcabral.kotlin.android.githubcompose.ui.feature.users.UsersContract
 import kotlinx.coroutines.flow.Flow
@@ -23,14 +26,14 @@ fun UsersScreen(
     onNavigationRequested: (navigationEffect: UsersContract.Effect.Navigation) -> Unit
 ) {
     val scaffoldState: ScaffoldState = rememberScaffoldState()
-    val snackbarMessage = stringResource(R.string.users_screen_snackbar_loaded_message)
+    val snackBarMessage = stringResource(R.string.users_screen_snackbar_loaded_message)
 
     LaunchedEffect(SIDE_EFFECTS_KEY) {
         effectFlow?.onEach { effect ->
             when (effect) {
                 is UsersContract.Effect.DataWasLoaded -> {
                     scaffoldState.snackbarHostState.showSnackbar(
-                        message = snackbarMessage,
+                        message = snackBarMessage,
                         duration = SnackbarDuration.Short
                     )
                 }
@@ -43,14 +46,41 @@ fun UsersScreen(
         scaffoldState = scaffoldState,
         topBar = { UsersTopBar() }
     ) {
-        if (state.isLoading) {
-            Progress()
-        } else {
-            Column(modifier = Modifier.fillMaxSize()) {
-                UsersList(users = state.users) { user ->
-                    onEventSent(UsersContract.Event.UserSelection(user))
-                }
-            }
+        when {
+            state.isLoading -> Progress()
+            state.isError -> NetworkError { onEventSent(UsersContract.Event.Retry) }
+            else -> UsersList(users = state.users) { onEventSent(UsersContract.Event.UserSelection(it)) }
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun UsersScreenSuccessPreview() {
+    val users = List(3) { buildUserPreview() }
+    UsersScreen(
+        state = UsersContract.State(
+            users = users,
+            isLoading = false,
+            isError = false,
+        ),
+        effectFlow = null,
+        onEventSent = {},
+        onNavigationRequested = {},
+    )
+}
+
+@Preview(showBackground = true)
+@Composable
+fun UsersScreenErrorPreview() {
+    UsersScreen(
+        state = UsersContract.State(
+            users = emptyList(),
+            isLoading = false,
+            isError = true,
+        ),
+        effectFlow = null,
+        onEventSent = {},
+        onNavigationRequested = {},
+    )
 }

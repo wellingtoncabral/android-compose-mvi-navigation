@@ -12,7 +12,7 @@ val viewModelModule = module {
 
     viewModel { parameters ->
         ReposViewModel(
-            userLogin = parameters.get(),
+            userId = parameters.get(),
             githubRepository = get()
         )
     }

@@ -9,8 +9,8 @@ import org.koin.androidx.compose.getViewModel
 import org.koin.core.parameter.parametersOf
 
 @Composable
-fun ReposScreenDestination(userLogin: String?, navController: NavController) {
-    val viewModel = getViewModel<ReposViewModel> { parametersOf(userLogin) }
+fun ReposScreenDestination(UserId: String, navController: NavController) {
+    val viewModel = getViewModel<ReposViewModel> { parametersOf(UserId) }
     ReposScreen(
         state = viewModel.viewState.value,
         effectFlow = viewModel.effect,
@@ -19,6 +19,6 @@ fun ReposScreenDestination(userLogin: String?, navController: NavController) {
             if (navigationEffect is ReposContract.Effect.Navigation.Back) {
                 navController.popBackStack()
             }
-        }
+        },
     )
 }

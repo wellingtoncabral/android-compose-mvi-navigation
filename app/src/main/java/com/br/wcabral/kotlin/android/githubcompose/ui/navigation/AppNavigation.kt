@@ -1,25 +1,14 @@
 package com.br.wcabral.kotlin.android.githubcompose.ui.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.br.wcabral.kotlin.android.githubcompose.ui.navigation.Navigation.Args.USER_ID
-
-object Navigation {
-
-    object Args {
-        const val USER_ID = "user_id"
-    }
-
-    object Routes {
-        const val USERS = "users"
-        const val REPOS = "$USERS/{$USER_ID}"
-    }
-
-}
 
 @Composable
 fun AppNavigation() {
@@ -42,10 +31,28 @@ fun AppNavigation() {
                 type = NavType.StringType
             })
         ) { backStackEntry ->
+            val userId = requireNotNull(backStackEntry.arguments?.getString(USER_ID)) { "User id is required as an argument" }
             ReposScreenDestination(
-                userLogin = backStackEntry.arguments?.getString(USER_ID),
+                UserId = userId,
                 navController = navController
             )
         }
     }
+}
+
+object Navigation {
+
+    object Args {
+        const val USER_ID = "user_id"
+    }
+
+    object Routes {
+        const val USERS = "users"
+        const val REPOS = "$USERS/{$USER_ID}"
+    }
+
+}
+
+fun NavController.navigateToRepos(userId: String) {
+    navigate(route = "${Navigation.Routes.USERS}/$userId")
 }

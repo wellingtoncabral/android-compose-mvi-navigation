@@ -1,9 +1,13 @@
 package com.br.wcabral.kotlin.android.githubcompose.ui.feature.repos.composables
 
-import android.content.Intent
-import android.net.Uri
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
@@ -25,8 +29,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.br.wcabral.kotlin.android.githubcompose.R
 import com.br.wcabral.kotlin.android.githubcompose.data.model.Repo
 import com.br.wcabral.kotlin.android.githubcompose.data.model.RepoPreview
+import com.br.wcabral.kotlin.android.githubcompose.common.buildUrlIntent
 import com.br.wcabral.kotlin.android.githubcompose.ui.theme.OnSurfaceTextAlpha
-import java.util.*
+import java.util.Locale
 
 @Composable
 fun ReposListItem(repo: Repo) {
@@ -35,7 +40,7 @@ fun ReposListItem(repo: Repo) {
     val paddingMedium = dimensionResource(id = R.dimen.padding_medium)
 
     val context = LocalContext.current
-    val visitRepoIntent = remember{ Intent(Intent.ACTION_VIEW, Uri.parse(repo.htmlUrl)) }
+    val visitRepoIntent = remember{ buildUrlIntent(repo.htmlUrl) }
 
     Column(
         modifier = Modifier

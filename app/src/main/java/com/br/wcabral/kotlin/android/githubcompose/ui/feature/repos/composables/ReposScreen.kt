@@ -1,15 +1,13 @@
 package com.br.wcabral.kotlin.android.githubcompose.ui.feature.repos.composables
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.br.wcabral.kotlin.android.githubcompose.data.model.RepoPreview
-import com.br.wcabral.kotlin.android.githubcompose.data.model.UserPreview
+import com.br.wcabral.kotlin.android.githubcompose.data.model.buildUserDetailPreview
 import com.br.wcabral.kotlin.android.githubcompose.ui.base.SIDE_EFFECTS_KEY
+import com.br.wcabral.kotlin.android.githubcompose.ui.feature.common.NetworkError
 import com.br.wcabral.kotlin.android.githubcompose.ui.feature.common.Progress
 import com.br.wcabral.kotlin.android.githubcompose.ui.feature.repos.ReposContract
 import kotlinx.coroutines.flow.Flow
@@ -39,13 +37,13 @@ fun ReposScreen(
             onEventSent(ReposContract.Event.BackButtonClicked)
         } }
     ) {
-        if (state.isUserLoading || state.isReposLoading) {
-            Progress()
-        } else {
-            state.user?.let { user ->
-                Column(modifier = Modifier.fillMaxSize()) {
+        when {
+            state.isUserLoading || state.isReposLoading -> Progress()
+            state.isError -> NetworkError { onEventSent(ReposContract.Event.Retry) }
+            else -> {
+                state.user?.let { user ->
                     ReposList(
-                        header = { ReposListHeader(user = user) },
+                        header = { ReposListHeader(userDetail = user) },
                         reposList = state.reposList
                     )
                 }
@@ -56,18 +54,35 @@ fun ReposScreen(
 
 @Preview(showBackground = true)
 @Composable
-fun ReposScreenPreview() {
+fun ReposScreenSuccessPreview() {
     val repos = List(3) { RepoPreview.repo }
-
     ReposScreen(
         state = ReposContract.State(
-            user = UserPreview.user,
+            user = buildUserDetailPreview(),
             reposList = repos,
             isUserLoading = false,
-            isReposLoading = false
+            isReposLoading = false,
+            isError = false,
         ),
         effectFlow = null,
         onEventSent = {},
-        onNavigationRequested = {}
+        onNavigationRequested = {},
+    )
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ReposScreenErrorPreview() {
+    ReposScreen(
+        state = ReposContract.State(
+            user = buildUserDetailPreview(),
+            reposList = emptyList(),
+            isUserLoading = false,
+            isReposLoading = false,
+            isError = true,
+        ),
+        effectFlow = null,
+        onEventSent = {},
+        onNavigationRequested = {},
     )
 }

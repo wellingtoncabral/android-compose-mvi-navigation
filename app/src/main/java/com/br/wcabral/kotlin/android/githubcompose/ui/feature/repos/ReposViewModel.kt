@@ -6,46 +6,56 @@ import com.br.wcabral.kotlin.android.githubcompose.ui.base.BaseViewModel
 import kotlinx.coroutines.launch
 
 class ReposViewModel(
-    private val userLogin: String,
+    private val userId: String,
     private val githubRepository: GithubRepository
 ) : BaseViewModel<ReposContract.Event, ReposContract.State, ReposContract.Effect>() {
 
-    init {
-        viewModelScope.launch {
-            getUser(userLogin)
-            getRepos()
-        }
-    }
+    init { getAll() }
 
     override fun setInitialState() = ReposContract.State(
         user = null,
         reposList = emptyList(),
         isUserLoading = true,
-        isReposLoading = true
+        isReposLoading = true,
+        isError = false,
     )
 
     override fun handleEvents(event: ReposContract.Event) {
         when (event) {
             ReposContract.Event.BackButtonClicked -> {
-                setEffect {
-                    ReposContract.Effect.Navigation.Back
-                }
+                setEffect { ReposContract.Effect.Navigation.Back }
             }
+            ReposContract.Event.Retry -> getAll()
         }
     }
 
-    private suspend fun getUser(userLogin: String) {
-        val user = githubRepository.getUser(userLogin)
-        setState {
-            copy(user = user, isUserLoading = false)
+    private fun getAll() {
+        viewModelScope.launch {
+            getUser()
+            getRepos()
         }
+    }
+
+    private suspend fun getUser() {
+        githubRepository.getUser(userId)
+            .onSuccess { userDetail ->
+                setState { copy(user = userDetail, isUserLoading = false) }
+            }
+            .onFailure {
+                setState { copy(isError = true, isUserLoading = false) }
+            }
     }
 
     private suspend fun getRepos() {
-        val repos = githubRepository.getRepos(userLogin)
-        setState {
-            copy(reposList = repos, isReposLoading = false)
-        }
+        setState { copy(isReposLoading = true, isError = false) }
+
+        githubRepository.getRepos(userId)
+            .onSuccess { repos ->
+                setState { copy(reposList = repos, isReposLoading = false) }
+            }
+            .onFailure {
+                setState { copy(isError = true, isReposLoading = false) }
+            }
     }
 
 }

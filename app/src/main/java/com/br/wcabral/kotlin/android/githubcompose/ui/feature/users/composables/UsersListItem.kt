@@ -13,7 +13,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import com.br.wcabral.kotlin.android.githubcompose.R
 import com.br.wcabral.kotlin.android.githubcompose.data.model.User
-import com.br.wcabral.kotlin.android.githubcompose.data.model.UserPreview
+import com.br.wcabral.kotlin.android.githubcompose.data.model.buildUserPreview
 import com.br.wcabral.kotlin.android.githubcompose.ui.feature.common.RoundedImage
 
 @Composable
@@ -48,7 +48,7 @@ fun UsersListItem(
             )
             Column {
                 Text(
-                    text = user.login,
+                    text = user.userId,
                     style = MaterialTheme.typography.h5,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.fillMaxWidth()
@@ -73,5 +73,5 @@ fun UsersListItem(
 @Preview(showBackground = true)
 @Composable
 fun UsersListItemPreview() {
-    UsersListItem(user = UserPreview.user, onItemClick = {})
+    UsersListItem(user = buildUserPreview(), onItemClick = {})
 }

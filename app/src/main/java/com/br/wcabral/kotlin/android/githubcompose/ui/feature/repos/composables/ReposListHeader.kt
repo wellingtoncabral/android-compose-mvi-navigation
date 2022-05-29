@@ -1,7 +1,5 @@
 package com.br.wcabral.kotlin.android.githubcompose.ui.feature.repos.composables
 
-import android.content.Intent
-import android.net.Uri
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -15,15 +13,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import com.br.wcabral.kotlin.android.githubcompose.R
-import com.br.wcabral.kotlin.android.githubcompose.data.model.User
-import com.br.wcabral.kotlin.android.githubcompose.data.model.UserPreview
+import com.br.wcabral.kotlin.android.githubcompose.data.model.UserDetail
+import com.br.wcabral.kotlin.android.githubcompose.data.model.buildUserDetailPreview
+import com.br.wcabral.kotlin.android.githubcompose.common.buildUrlIntent
 import com.br.wcabral.kotlin.android.githubcompose.ui.feature.common.RoundedImage
 import com.br.wcabral.kotlin.android.githubcompose.ui.theme.OnSurfaceBackgroundAlpha
 import com.br.wcabral.kotlin.android.githubcompose.ui.theme.OnSurfaceTextAlpha
 import java.util.*
 
 @Composable
-fun ReposListHeader(user: User) {
+fun ReposListHeader(userDetail: UserDetail) {
     val paddingMedium = dimensionResource(id = R.dimen.padding_medium)
     val paddingXSmall = dimensionResource(id = R.dimen.padding_xsmall)
 
@@ -33,15 +32,15 @@ fun ReposListHeader(user: User) {
                 .fillMaxWidth()
                 .padding(paddingMedium)
         ) {
-            ScoreSession(user)
+            ScoreSession(userDetail)
 
             Spacer(modifier = Modifier.size(paddingXSmall))
 
-            UserDetailSession(user)
+            UserDetailSession(userDetail)
 
             Spacer(modifier = Modifier.size(paddingMedium))
 
-            ButtonsSession(user)
+            ButtonsSession(userDetail)
         }
 
         Divider(
@@ -52,46 +51,46 @@ fun ReposListHeader(user: User) {
 }
 
 @Composable
-fun ScoreSession(user: User) {
+fun ScoreSession(userDetail: UserDetail) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceAround
     ) {
         RoundedImage(
-            url = user.avatarUrl,
+            url = userDetail.avatarUrl,
             placeholder = R.drawable.avatar_placeholder,
             modifier = Modifier
                 .size(dimensionResource(id = R.dimen.avatar_size_large))
                 .padding(end = dimensionResource(id = R.dimen.padding_medium))
         )
 
-        ScoreItem(count = user.publicRepos, description = stringResource(R.string.repos_score_title))
-        ScoreItem(count = user.followers, description = stringResource(R.string.followers_score_title))
-        ScoreItem(count = user.following, description = stringResource(R.string.following_score_title))
+        ScoreItem(count = userDetail.publicRepos, description = stringResource(R.string.repos_score_title))
+        ScoreItem(count = userDetail.followers, description = stringResource(R.string.followers_score_title))
+        ScoreItem(count = userDetail.following, description = stringResource(R.string.following_score_title))
     }
 }
 
 @Composable
-fun UserDetailSession(user: User) {
+fun UserDetailSession(userDetail: UserDetail) {
     Text(
-        text = user.name,
+        text = userDetail.name,
         style = MaterialTheme.typography.h5,
         fontWeight = FontWeight.Bold
     )
     Text(
-        text = user.location ?: stringResource(R.string.location_not_defined),
+        text = userDetail.location ?: stringResource(R.string.location_not_defined),
         style = MaterialTheme.typography.subtitle1,
         color = MaterialTheme.colors.onSurface.copy(alpha = OnSurfaceTextAlpha)
     )
 }
 
 @Composable
-fun ButtonsSession(user: User) {
+fun ButtonsSession(userDetail: UserDetail) {
     // See all button
     val context = LocalContext.current
-    val profileIntent = remember{ Intent(Intent.ACTION_VIEW, Uri.parse(user.htmlUrl)) }
-    val blogIntent = remember{ Intent(Intent.ACTION_VIEW, Uri.parse(user.blogUrl)) }
+    val profileIntent = remember{ buildUrlIntent(userDetail.htmlUrl) }
+    val blogIntent = remember{ buildUrlIntent(userDetail.blogUrl) }
 
     // View Blog
     val blogNotFoundDialog = remember { mutableStateOf(false) }
@@ -106,7 +105,7 @@ fun ButtonsSession(user: User) {
         Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.padding_small)))
 
         OutlinedButton(onClick = {
-            if (user.blogUrl.isEmpty()) {
+            if (userDetail.blogUrl.isEmpty()) {
                 blogNotFoundDialog.value = true
             } else {
                 context.startActivity(blogIntent)
@@ -153,5 +152,5 @@ fun ScoreItem(count: Int, description: String) {
 @Preview(showBackground = true)
 @Composable
 fun ReposUserDetailPreview() {
-    ReposListHeader(user = UserPreview.user)
+    ReposListHeader(userDetail = buildUserDetailPreview())
 }

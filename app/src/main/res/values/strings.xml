@@ -16,4 +16,7 @@
     <string name="blog_not_found_dialog_title">Blog not found</string>
     <string name="blog_not_found_dialog_text">The use doesn\'t have a blog</string>
     <string name="blog_not_found_dialog_confirm_button">Got it</string>
+    <string name="network_error_description">A network error occurred. Check your connection or try again</string>
+    <string name="network_error_title">Oh no!</string>
+    <string name="network_error_retry_button_text">Try again</string>
 </resources>

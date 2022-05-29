@@ -16,9 +16,7 @@ fun UsersScreenDestination(navController: NavController) {
         onEventSent = { event ->  viewModel.setEvent(event) },
         onNavigationRequested = { navigationEffect ->
             if (navigationEffect is UsersContract.Effect.Navigation.ToRepos) {
-                navController.navigate(
-                    route = "${Navigation.Routes.USERS}/${navigationEffect.userLogin}"
-                )
+                navController.navigateToRepos(navigationEffect.userId)
             }
         }
     )
