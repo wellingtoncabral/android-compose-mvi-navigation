@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
@@ -19,8 +18,7 @@ interface ViewSideEffect
 
 const val SIDE_EFFECTS_KEY = "side-effects_key"
 
-abstract class BaseViewModel<Event: ViewEvent, UiState: ViewState, Effect: ViewSideEffect>
-    : ViewModel() {
+abstract class BaseViewModel<Event: ViewEvent, UiState: ViewState, Effect: ViewSideEffect> : ViewModel() {
 
     abstract fun setInitialState(): UiState
     abstract fun handleEvents(event: Event)

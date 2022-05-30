@@ -1,7 +1,7 @@
 package com.br.wcabral.kotlin.android.githubcompose.di
 
-import com.br.wcabral.kotlin.android.githubcompose.data.BASE_URL
 import com.br.wcabral.kotlin.android.githubcompose.data.GithubApi
+import com.br.wcabral.kotlin.android.githubcompose.data.Endpoints
 import okhttp3.OkHttpClient
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -15,7 +15,7 @@ val appModule = module {
 
     single {
         Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(Endpoints.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .client(get())
             .build()

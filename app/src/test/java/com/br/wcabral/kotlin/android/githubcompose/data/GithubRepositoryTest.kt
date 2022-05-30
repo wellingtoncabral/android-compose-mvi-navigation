@@ -63,7 +63,7 @@ class GithubRepositoryTest {
     }
 
     @Test
-    fun `Given an exception When getUsers called then returns an exception`() = runTest {
+    fun `Given an exception When getUsers called then returns failure`() = runTest {
         // Given
         coEvery { githubApi.getUsers() } throws Exception("")
 
@@ -75,7 +75,7 @@ class GithubRepositoryTest {
     }
 
     @Test
-    fun `Given an exception When getUser called then returns an exception`() = runTest {
+    fun `Given an exception When getUser called then returns failure`() = runTest {
         // Given
         coEvery { githubApi.getUser(any()) } throws Exception("")
 
@@ -87,7 +87,7 @@ class GithubRepositoryTest {
     }
 
     @Test
-    fun `Given an exception When getRepos called then returns an exception`() = runTest {
+    fun `Given an exception When getRepos called then returns failure`() = runTest {
         // Given
         coEvery { githubApi.getRepos(any()) } throws Exception("")
 

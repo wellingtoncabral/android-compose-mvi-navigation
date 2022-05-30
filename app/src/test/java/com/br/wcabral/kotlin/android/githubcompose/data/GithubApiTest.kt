@@ -10,7 +10,6 @@ import org.junit.After
 import org.junit.Test
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.lang.Exception
 import java.util.concurrent.TimeUnit
 import kotlin.test.assertEquals
 
@@ -62,14 +61,17 @@ class GithubApiTest {
 
         // When
         val actual = runBlocking { api.getUsers() }
+        val request = mockWebService.takeRequest()
 
         // Then
         assertEquals(expected, actual)
+        assertEquals("/users", request.path)
     }
 
     @Test
     fun `Given 200 response When fetching user Then returns user correctly`() {
         // Given
+        val userId = "mojombo"
         mockWebService.enqueueResponse(
             fileName = "user-detail.json",
             code = 200
@@ -86,15 +88,18 @@ class GithubApiTest {
         )
 
         // When
-        val actual = runBlocking { api.getUser("mojombo") }
+        val actual = runBlocking { api.getUser(userId) }
+        val request = mockWebService.takeRequest()
 
         // Then
         assertEquals(expected, actual)
+        assertEquals("/users/$userId", request.path)
     }
 
     @Test
     fun `Given 200 response When fetching repos Then returns repos correctly`() {
         // Given
+        val userId = "mojombo"
         mockWebService.enqueueResponse(
             fileName = "repos.json",
             code = 200
@@ -134,9 +139,11 @@ class GithubApiTest {
         )
 
         // When
-        val actual = runBlocking { api.getRepos("mojombo") }
+        val actual = runBlocking { api.getRepos(userId) }
+        val request = mockWebService.takeRequest()
 
         // Then
         assertEquals(expected, actual)
+        assertEquals("/users/$userId/repos", request.path)
     }
 }
