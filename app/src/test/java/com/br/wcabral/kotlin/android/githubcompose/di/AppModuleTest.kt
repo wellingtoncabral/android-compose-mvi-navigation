@@ -7,7 +7,6 @@ import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import org.koin.core.parameter.parametersOf
 import org.koin.dsl.koinApplication
 import org.koin.test.check.checkModules
 

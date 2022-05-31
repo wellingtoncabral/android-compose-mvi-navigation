@@ -1,7 +1,6 @@
 package com.br.wcabral.kotlin.android.githubcompose.ui.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost

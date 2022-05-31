@@ -24,7 +24,7 @@ class UsersViewModel(
         }
     }
 
-    private fun getUsers() {
+    fun getUsers() {
         viewModelScope.launch {
             setState { copy(isLoading = true, isError = false) }
 

@@ -4,7 +4,6 @@
     <string name="users_screen_top_bar_title">Github Users</string>
     <string name="users_screen_snackbar_loaded_message">Users are loaded.</string>
     <string name="repos_screen_top_bar_title">Repositories</string>
-    <string name="repos_screen_snackbar_loaded_message">Repositories are loaded.</string>
     <string name="repos_score_title">Repos</string>
     <string name="followers_score_title">Followers</string>
     <string name="following_score_title">Following</string>

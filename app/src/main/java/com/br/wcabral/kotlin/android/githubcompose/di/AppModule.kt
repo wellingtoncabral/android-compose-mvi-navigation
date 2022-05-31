@@ -21,7 +21,7 @@ val appModule = module {
             .build()
     }
 
-    single<GithubApi> {
+    single {
         get<Retrofit>().create(GithubApi::class.java)
     }
 
